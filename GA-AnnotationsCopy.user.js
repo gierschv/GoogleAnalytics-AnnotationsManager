@@ -1,5 +1,7 @@
 // ==UserScript==
 // @name           Google Analytics - Copy profiles annotations
+// @version        0.1
+// @license        GPLv3 (see LICENSE)
 // @author         Vincent Giersch <mail@vincent.sh>
 // @description    Copy annotations of Google Analytics profiles
 // @include        https://www.google.com/analytics/*
@@ -60,7 +62,7 @@ function letsJQuery() {
         $('.C_ANNOTATIONS_COPY_CHCKBX > input').change(dumpAnnotationsProcess);
         return false;
     };
-    
+
     var showAnnotations = function() {
         var annotationsArray = localStorage.getItem('annotations');
         if (!annotationsArray)
@@ -91,7 +93,7 @@ function letsJQuery() {
         // Send
         $('.C_ANNOTATIONS_SAVE_BUTTON > b').click();
     }
-    
+
     var pasteAnnotations = function() {
         var annotationsArray = localStorage.getItem('annotations');
         if (!annotationsArray)

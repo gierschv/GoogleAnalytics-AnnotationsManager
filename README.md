@@ -3,22 +3,27 @@ Google Analytics Annotations Manager
 
 Why ?
 -----
-You want to copy your annotations between Google Analytics accounts / profiles ?
+You want to copy your annotations between Google Analytics accounts /
+profiles ?
 You want to remove multiples annotations together ?
 You want to export your annotations as a CSV file ?
 
-This Greasemonkey user script is for you : it provides GA annotations manage tools for your Google Analaytics interface.
+This Greasemonkey user script is for you : it provides GA annotations
+manage tools for your Google Analaytics interface.
 
 How use it ?
 ------------
 Install this userscript using Greasemonkey in Firefox (not tested yet
-in Chrom{e,ium}, but don't support @require support) and use the version 5 of Google Analytics.
+in Chrom{e,ium}, but don't support @require) and use the version 5 of
+Google Analytics (actual beta).
 
-You will show new annotations features in Google Analytics annotations panel as shown on the screenshot.
+You will show new annotations features in Google Analytics annotations
+panel as shown on the screenshot.
 
 How it works ?
 --------------
-This user script uses HTML5 localstorage to store the annotations into your browser.
+This user script uses HTML5 localstorage to store the annotations into
+your browser.
 
 Screenshots
 -----------

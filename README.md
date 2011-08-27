@@ -1,38 +1,37 @@
-Google Analytics Annotations Copy
-=================================
+Google Analytics Annotations Manager
+====================================
 
 Why ?
 -----
-You want to copy your annotations between Google Analytics accounts/profiles ?
-This Greasemonkey user script is for you : it provides GA annotations copy tools
-for your Google Analaytics interface.
+You want to copy your annotations between Google Analytics accounts / profiles ?
+You want to remove multiples annotations together ?
+You want to export your annotations as a CSV file ?
 
-How ?
------
-In first, install this userscript using Greasemonkey in Firefox (not tested yet
-in Chrom{e,ium}).
+This Greasemonkey user script is for you : it provides GA annotations manage tools for your Google Analaytics interface.
 
-In second, go inside the profile you want copy the annotations, (for example
-in the Visitors overview page), open the annotations panel, and click on
-"Copy annotation(s)". By default, all of the annotations from the current period
-will be copied into the localstorage. You can select or deselect copied
-annotations using the checkboxes on the right of the panel.
+How use it ?
+------------
+Install this userscript using Greasemonkey in Firefox (not tested yet
+in Chrom{e,ium}, but don't support @require support) and use the version 5 of Google Analytics.
 
-In third, go inside the profile you want paste the annotations, open the
-annotaions panel, and click on "Paste XX annotation(s)". You should see the
-annotations copied.
+You will show new annotations features in Google Analytics annotations panel as shown on the screenshot.
 
 How it works ?
 --------------
-This user script uses HTML5 localstorage to store the annotations into your
-browser.
+This user script uses HTML5 localstorage to store the annotations into your browser.
 
 Screenshots
 -----------
-Select which annotations you want to copy :
+![Sreenshot](https://lh5.googleusercontent.com/--qEEkeRfe0k/TljN9Egc1yI/AAAAAAAAAGk/a1drHp2QyvM/GA-Annotations-v0.2.PNG)
 
-![Select which annotations you want to copy](https://lh6.googleusercontent.com/-O7wWF_AcV78/TkVMyK8UKwI/AAAAAAAAACI/pHXJ-Tidyvg/Capture.PNG)
-
-Paste stored annotations :
-
-![Paste stored annotations](https://lh3.googleusercontent.com/-EYmepvil6EA/TkVMyIAJJXI/AAAAAAAAACM/uD-K_jNZEBY/Capture-1.PNG)
+Changelog
+---------
+-   v0.2 :
+    -    Clean jQuery requirement ;
+    -    Use fireEvent with @FGRibreau jQuery library instead of
+         jQuery trigger and Google Analytics Actionscript methods ;
+    -    Display checkboxes on panel display ;
+    -    Implement remove of annotations using added checkboxes ;
+    -    Implement basic CSV export using added checkboxes.
+-   v0.1
+    -    Implement copy of annotations.

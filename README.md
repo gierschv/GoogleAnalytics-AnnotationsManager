@@ -31,6 +31,8 @@ Screenshots
 
 Changelog
 ---------
+-   v0.2.1 :
+    -    Fix selectors due to an upgrade of GA code.
 -   v0.2 :
     -    Clean jQuery requirement ;
     -    Use fireEvent with @FGRibreau jQuery library instead of

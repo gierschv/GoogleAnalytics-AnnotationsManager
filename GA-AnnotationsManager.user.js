@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           Google Analytics - Manage profiles annotations
-// @version        0.2
+// @version        0.2.1
 // @license        GPLv3 : http://www.gnu.org/licenses/gpl-3.0.txt
 // @author         Vincent Giersch <mail@vincent.sh>
 // @description    Manage annotations of Google Analytics profiles (multiple copy, delete and CSV export). Works only on Google Analytics V5.
@@ -13,19 +13,20 @@
     var dumpAnnotations = function() {
         var dumpAnnotationsProcess = function() {
             var annotationsArray = [];
-            $('.C_ANNOTATIONS_LIST > tbody:eq(1) > tr').each(function(idx, elem) {
+            $('#AnnotationsDrawer_list > tbody:eq(1) > tr').each(function(idx, elem) {
                 if ($(elem).find('input[type="checkbox"]').attr('checked') != undefined)
                 {
                     annotationsArray.push({
-                        date: $(elem).find('.C_ANNOTATIONS_DATE').text(),
-                        text: $(elem).find('.C_ANNOTATIONS_TEXT > span:eq(1)').text(),
-                        isPrivate: $(elem).find('.C_ANNOTATIONS_ACCESS_LABEL').css('display') == 'block'
+                        date: $(elem).find('.Ld').text(),
+                        text: $(elem).find('.dr > span:eq(1)').text(),
+                        isPrivate: $(elem).find('.dr > span.ng').css('display') == 'block'
                     });
                 }
             });
+            if (annotationsArray.length == 0)
+              return;
             localStorage.setItem('annotations', JSON.stringify(annotationsArray));
-            $('.C_ANNOTATIONS_MANAGER_WRAPPER').html(' |&nbsp; ' + annotationsArray.length + ' annotations are into localstorage.')
-                                               .removeClass('C_ANNOTATIONS_LINKS_DISPLAYED');
+            $('#AnnotationManagerWrapper').html(' |&nbsp; ' + annotationsArray.length + ' annotations are into localstorage.');
         };
 
         dumpAnnotationsProcess();
@@ -51,29 +52,29 @@
 
     var exportAnnotations = function() {
         var outputCSV = "Date,Text,Creator,Is Private\r\n", line = "";
-        $('.C_ANNOTATIONS_LIST > tbody:eq(1) > tr').each(function(idx, elem) {
+        $('#AnnotationsDrawer_list > tbody:eq(1) > tr').each(function(idx, elem) {
             if ($(elem).find('input[type="checkbox"]').attr('checked') != undefined)
             {
-                line = '"' + $(elem).find('.C_ANNOTATIONS_DATE').text() + '"';
-                line += ',"' + $(elem).find('.C_ANNOTATIONS_TEXT > span:eq(1)').text().replace(/"/g, '""') + '"';
-                line += ',"' + $(elem).find('.C_ANNOTATIONS_CREATOR').text() + '"';
-                line += ',"' + ($(elem).find('.C_ANNOTATIONS_ACCESS_LABEL').css('display') == 'block' ? 'Yes' : 'No') + '"';
+                line = '"' + $(elem).find('.Ld').text() + '"';
+                line += ',"' + $(elem).find('.dr > span:eq(1)').text().replace(/"/g, '""') + '"';
+                line += ',"' + $(elem).find('.Hx').text() + '"';
+                line += ',"' + ($(elem).find('.dr > span.ng').css('display') == 'block' ? 'Yes' : 'No') + '"';
                 line += "\r\n";
                 outputCSV += line;
             }
         });
         window.open('data:text/csv;charset=utf8,' + encodeURIComponent(outputCSV));
     };
-    
+
     var pasteAnnotationsFill = function(annotation)
     {
-        var form = $('.C_ANNOTATIONS_TABLE_WRAPPER > form');
+        var form = $('.EK > form');
         $(form).find('input[name="date"]').val(annotation.date);
         $(form).find('textarea[name="text"]').val(annotation.text);
         if (annotation.isPrivate)
             $(form).find('input[name="access"]').val('PRIVATE');
         $(form).find('textarea[name="text"]').fireEvent('click', {button:1});
-        $('.C_ANNOTATIONS_SAVE_BUTTON').fireEvent('click', {button:1});
+        $(form).find('a.o.un').fireEvent('click', {button:1});
     }
 
     var pasteAnnotations = function() {
@@ -83,7 +84,7 @@
         annotationsArray = JSON.parse(annotationsArray);
         var pasteAnnotationsCurrent = 0;
         $(document).bind('DOMAttrModified', function(event) {
-            if (event.newValue == 'C_ANNOTATIONS_CREATE_NEW C_ANNOTATIONS_BUTTON disabled')
+            if (event.newValue == 'VR Li disabled')
             {
                 pasteAnnotationsFill(annotationsArray[pasteAnnotationsCurrent]);
                 pasteAnnotationsCurrent++;
@@ -92,86 +93,78 @@
                     $(document).unbind('DOMAttrModified');
                     return true;
                 }
-                $('.C_ANNOTATIONS_CREATE_NEW').fireEvent('click', {button:1});
+                $('#AnnotationDrawer_controls').find('a.VR.Li').fireEvent('click', {button:1});
                 return true;
             }
         });
-       
-        $('.C_ANNOTATIONS_CREATE_NEW').fireEvent('click', {button:1});
+        $('#AnnotationDrawer_controls').find('a.VR.Li').fireEvent('click', {button:1});
     };
-    
+
     var cancelCpyAnnotations = function() {
         localStorage.removeItem('annotations');
-        $('.C_ANNOTATIONS_MANAGER_WRAPPER').remove();
+        $('#AnnotationManagerWrapper').remove();
         displayLinks();
     };
-    
+
     var removeAnnotations = function() {
         if (!confirm('Remove these annotations ?'))
             return false;
         unsafeWindow.orig_confirm = unsafeWindow.confirm;
         unsafeWindow.confirm = function() { return true; };
-        $('.C_ANNOTATIONS_LIST > tbody:eq(1) > tr').each(function(idx, elem) {
+        $('#AnnotationsDrawer_list > tbody:eq(1) > tr').each(function(idx, elem) {
             if ($(elem).find('input[type="checkbox"]').attr('checked') != undefined)
             {
-                $(this).find('.C_ANNOTATIONS_EDIT_CELL > a').fireEvent('click', {button:1});
-                $('.C_ANNOTATIONS_DELETE_BUTTON:eq(1)').fireEvent('click', {button:1});
+                $(this).find('.ew > a').fireEvent('click', {button:1});
+                $('#AnnotationsDrawer_list').find('.Xq:visible').fireEvent('click', {button:1});
             }
         });
         unsafeWindow.confirm = unsafeWindow.orig_confirm;
         return true;
     };
-    
+
     var displayLinks = function() {
-        if ($('.C_ANNOTATIONS_LINKS_DISPLAYED').length > 0)
-            return false;
-        $('.C_ANNOTATIONS_MANAGER_WRAPPER').remove();
-        
+        $('#AnnotationManagerWrapper').remove();
+        $('.AnnotationManager_chckbx').remove();
+
         var annotationsArray = localStorage.getItem('annotations');
         if (annotationsArray && (annotationsArray = JSON.parse(annotationsArray).length) > 0)
         {
-            $('.C_ANNOTATIONS_CREATE_NEW').parent().append('<span class="C_ANNOTATIONS_MANAGER_WRAPPER C_ANNOTATIONS_LINKS_DISPLAYED">\
-                                                            |&nbsp;<a class="C_ANNOTATIONS_PASTE C_ANNOTATIONS_BUTTON" onclick="return false;" href="#">Paste ' +
-                                                                annotationsArray + ' annotation(s)</a>\
-                                                            |&nbsp;<a class="C_ANNOTATIONS_SHOW C_ANNOTATIONS_BUTTON" onclick="return false;" href="#">Show annotation(s) in localstorage</a>\
-                                                            |&nbsp;<a class="C_ANNOTATIONS_CANCELCPY C_ANNOTATIONS_BUTTON" onclick="return false;" href="#">Cancel copy</a>\
-                                                            </span>');
-            $('.C_ANNOTATIONS_PASTE').click(pasteAnnotations);
-            $('.C_ANNOTATIONS_SHOW').click(showAnnotations);
-            $('.C_ANNOTATIONS_CANCELCPY').click(cancelCpyAnnotations);
+            $('#AnnotationDrawer_controls').find('a.VR.Li').parent().append('<span id="AnnotationManagerWrapper">\
+                                                                            &nbsp;&nbsp; | &nbsp;&nbsp; <a id="AnnotationManager_paste" class="VR" onclick="return false;" href="#">Paste ' +
+                                                                            annotationsArray + ' annotation(s)</a>\
+                                                                            &nbsp;&nbsp; | &nbsp;&nbsp; <a id="AnnotationManager_show" class="VR" onclick="return false;" href="#">Show annotation(s) in localstorage</a>\
+                                                                            &nbsp;&nbsp; | &nbsp;&nbsp; <a id="AnnotationManager_cancelcpy" class="VR" onclick="return false;" href="#">Cancel copy</a>\
+                                                                            </span>');
+            $('#AnnotationManager_paste').click(pasteAnnotations);
+            $('#AnnotationManager_show').click(showAnnotations);
+            $('#AnnotationManager_cancelcpy').click(cancelCpyAnnotations);
             return true;
         }
-        
-        $('.C_ANNOTATIONS_CREATE_NEW').parent().append('<span class="C_ANNOTATIONS_MANAGER_WRAPPER C_ANNOTATIONS_LINKS_DISPLAYED">\
-                                                        | <a class="C_ANNOTATIONS_COPY C_ANNOTATIONS_BUTTON" onclick="return false;" href="#">Copy annotation(s)</a>\
-                                                        | <a class="C_ANNOTATIONS_REMOVE C_ANNOTATIONS_BUTTON" onclick="return false;" href="#">Remove annotation(s)</a>\
-                                                        | <a class="C_ANNOTATIONS_EXPORT C_ANNOTATIONS_BUTTON" onclick="return false;" href="#">Export annotation(s) as CSV</a>\
-                                                        |&nbsp;\
-                                                            Select :\
-                                                            <a class="C_ANNOTATIONS_SELECT_ALL C_ANNOTATIONS_BUTTON" onclick="return false;" href="#">All</a>\
-                                                            | <a class="C_ANNOTATIONS_SELECT_NONE C_ANNOTATIONS_BUTTON" onclick="return false;" href="#">None</a>\
-                                                        </span>');
-        $('.C_ANNOTATIONS_LIST > tbody:eq(1) > tr').append('<td class="C_ANNOTATIONS_COPY_CHCKBX"><input type="checkbox" /></td>');
 
-        $('.C_ANNOTATIONS_SELECT_ALL').click(function(){ $('.C_ANNOTATIONS_COPY_CHCKBX > input[type="checkbox"]').attr('checked', true); });
-        $('.C_ANNOTATIONS_SELECT_NONE').click(function(){ $('.C_ANNOTATIONS_COPY_CHCKBX > input[type="checkbox"]').attr('checked', false); });
-        
-        $('.C_ANNOTATIONS_COPY').click(dumpAnnotations);
-        $('.C_ANNOTATIONS_REMOVE').click(removeAnnotations);
-        $('.C_ANNOTATIONS_EXPORT').click(exportAnnotations);
-        
+        $('#AnnotationDrawer_controls').find('a.VR.Li').parent().append('<span id="AnnotationManagerWrapper">\
+                                                        | &nbsp;&nbsp;<a id="AnnotationManager_copy" class="VR" onclick="return false;" href="#">Copy annotation(s)</a>\
+                                                        &nbsp;&nbsp; | &nbsp;&nbsp;<a id="AnnotationManager_remove" class="VR" onclick="return false;" href="#">Remove annotation(s)</a>\
+                                                        &nbsp;&nbsp; | &nbsp;&nbsp;<a id="AnnotationManager_export" class="VR" onclick="return false;" href="#">Export annotation(s) as CSV</a>\
+                                                        &nbsp;&nbsp; |&nbsp;\
+                                                            Select :\
+                                                            <a id="AnnotationManager_select_all" class="VR" onclick="return false;" href="#">All</a>\
+                                                            &nbsp;&nbsp;| &nbsp;&nbsp;<a id="AnnotationManager_select_none" class="VR" onclick="return false;" href="#">None</a>\
+                                                        </span>');
+        $('#AnnotationsDrawer_list > tbody:eq(1) > tr').append('<td class="AnnotationManager_chckbx"><input type="checkbox" /></td>');
+
+        $('#AnnotationManager_select_all').click(function(){ $('.AnnotationManager_chckbx > input[type="checkbox"]').attr('checked', true); });
+        $('#AnnotationManager_select_none').click(function(){ $('.AnnotationManager_chckbx > input[type="checkbox"]').attr('checked', false); });
+
+        $('#AnnotationManager_copy').click(dumpAnnotations);
+        $('#AnnotationManager_remove').click(removeAnnotations);
+        $('#AnnotationManager_export').click(exportAnnotations);
+
         return true;
     };
 
     $(document).bind('DOMNodeInserted', function(event) {
-        if (event.target.className.indexOf('C_ANNOTATIONS') >= 0)
-        {
-            if (event.target.className.indexOf('editable') >= 0)
-            {
-                $('.C_ANNOTATIONS_MANAGER_WRAPPER').remove();
-                $('.C_ANNOTATIONS_COPY_CHCKBX').remove();
-            }
+        if (event.target.id.indexOf('AnnotationDrawer') >= 0 || /* Init */
+            event.target.className.indexOf('Vp editable') >= 0) /* New element */
             displayLinks();
-        }
     });
 })();

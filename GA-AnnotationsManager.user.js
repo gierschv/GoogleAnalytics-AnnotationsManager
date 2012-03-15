@@ -129,11 +129,11 @@
         var annotationsArray = localStorage.getItem('annotations');
         if (annotationsArray && (annotationsArray = JSON.parse(annotationsArray).length) > 0)
         {
-            $('#AnnotationDrawer_controls').find('a.VR.Li').parent().append('<span id="AnnotationManagerWrapper">\
-                                                                            &nbsp;&nbsp; | &nbsp;&nbsp; <a id="AnnotationManager_paste" class="VR" onclick="return false;" href="#">Paste ' +
+            $('#AnnotationDrawer_controls').find('a.Hi.LS').parent().append('<span id="AnnotationManagerWrapper">\
+                                                                            &nbsp;&nbsp; | &nbsp;&nbsp; <a id="AnnotationManager_paste" class="Hi" onclick="return false;" href="#">Paste ' +
                                                                             annotationsArray + ' annotation(s)</a>\
-                                                                            &nbsp;&nbsp; | &nbsp;&nbsp; <a id="AnnotationManager_show" class="VR" onclick="return false;" href="#">Show annotation(s) in localstorage</a>\
-                                                                            &nbsp;&nbsp; | &nbsp;&nbsp; <a id="AnnotationManager_cancelcpy" class="VR" onclick="return false;" href="#">Cancel copy</a>\
+                                                                            &nbsp;&nbsp; | &nbsp;&nbsp; <a id="AnnotationManager_show" class="Hi" onclick="return false;" href="#">Show annotation(s) in localstorage</a>\
+                                                                            &nbsp;&nbsp; | &nbsp;&nbsp; <a id="AnnotationManager_cancelcpy" class="Hi" onclick="return false;" href="#">Cancel copy</a>\
                                                                             </span>');
             $('#AnnotationManager_paste').click(pasteAnnotations);
             $('#AnnotationManager_show').click(showAnnotations);
@@ -141,14 +141,14 @@
             return true;
         }
 
-        $('#AnnotationDrawer_controls').find('a.VR.Li').parent().append('<span id="AnnotationManagerWrapper">\
-                                                        | &nbsp;&nbsp;<a id="AnnotationManager_copy" class="VR" onclick="return false;" href="#">Copy annotation(s)</a>\
-                                                        &nbsp;&nbsp; | &nbsp;&nbsp;<a id="AnnotationManager_remove" class="VR" onclick="return false;" href="#">Remove annotation(s)</a>\
-                                                        &nbsp;&nbsp; | &nbsp;&nbsp;<a id="AnnotationManager_export" class="VR" onclick="return false;" href="#">Export annotation(s) as CSV</a>\
+        $('#AnnotationDrawer_controls').find('a.Hi.LS').parent().append('<span id="AnnotationManagerWrapper">\
+                                                        | &nbsp;&nbsp;<a id="AnnotationManager_copy" class="Hi" onclick="return false;" href="#">Copy annotation(s)</a>\
+                                                        &nbsp;&nbsp; | &nbsp;&nbsp;<a id="AnnotationManager_remove" class="Hi" onclick="return false;" href="#">Remove annotation(s)</a>\
+                                                        &nbsp;&nbsp; | &nbsp;&nbsp;<a id="AnnotationManager_export" class="Hi" onclick="return false;" href="#">Export annotation(s) as CSV</a>\
                                                         &nbsp;&nbsp; |&nbsp;\
                                                             Select :\
-                                                            <a id="AnnotationManager_select_all" class="VR" onclick="return false;" href="#">All</a>\
-                                                            &nbsp;&nbsp;| &nbsp;&nbsp;<a id="AnnotationManager_select_none" class="VR" onclick="return false;" href="#">None</a>\
+                                                            <a id="AnnotationManager_select_all" class="Hi" onclick="return false;" href="#">All</a>\
+                                                            &nbsp;&nbsp;| &nbsp;&nbsp;<a id="AnnotationManager_select_none" class="Hi" onclick="return false;" href="#">None</a>\
                                                         </span>');
         $('#AnnotationsDrawer_list > tbody:eq(1) > tr').append('<td class="AnnotationManager_chckbx"><input type="checkbox" /></td>');
 

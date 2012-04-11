@@ -31,6 +31,10 @@ Screenshots
 
 Changelog
 ---------
+-   v0.2.3 :
+    -    Fix selectors due to an upgrade of GA code.
+-   v0.2.2 :
+    -    Fix selectors due to an upgrade of GA code.
 -   v0.2.1 :
     -    Fix selectors due to an upgrade of GA code.
 -   v0.2 :

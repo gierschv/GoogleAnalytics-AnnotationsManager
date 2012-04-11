@@ -17,9 +17,9 @@
                 if ($(elem).find('input[type="checkbox"]').attr('checked') != undefined)
                 {
                     annotationsArray.push({
-                        date: $(elem).find('.Ld').text(),
-                        text: $(elem).find('.dr > span:eq(1)').text(),
-                        isPrivate: $(elem).find('.dr > span.ng').css('display') == 'block'
+                        date: $(elem).find('.Fd').text(),
+                        text: $(elem).find('.ur > span:eq(1)').text(),
+                        isPrivate: $(elem).find('.ur > span.ng').css('display') == 'block'
                     });
                 }
             });
@@ -68,13 +68,13 @@
 
     var pasteAnnotationsFill = function(annotation)
     {
-        var form = $('.EK > form');
+        var form = $('td.jM > form');
         $(form).find('input[name="date"]').val(annotation.date);
         $(form).find('textarea[name="text"]').val(annotation.text);
         if (annotation.isPrivate)
             $(form).find('input[name="access"]').val('PRIVATE');
         $(form).find('textarea[name="text"]').fireEvent('click', {button:1});
-        $(form).find('a.o.un').fireEvent('click', {button:1});
+        $(form).find('a.u.un').fireEvent('click', {button:1});
     }
 
     var pasteAnnotations = function() {
@@ -84,7 +84,7 @@
         annotationsArray = JSON.parse(annotationsArray);
         var pasteAnnotationsCurrent = 0;
         $(document).bind('DOMAttrModified', function(event) {
-            if (event.newValue == 'VR Li disabled')
+            if (event.newValue == 'dU Wi disabled')
             {
                 pasteAnnotationsFill(annotationsArray[pasteAnnotationsCurrent]);
                 pasteAnnotationsCurrent++;
@@ -93,11 +93,11 @@
                     $(document).unbind('DOMAttrModified');
                     return true;
                 }
-                $('#AnnotationDrawer_controls').find('a.VR.Li').fireEvent('click', {button:1});
+                $('#AnnotationDrawer_controls a.dU.Wi').fireEvent('click', {button:1});
                 return true;
             }
         });
-        $('#AnnotationDrawer_controls').find('a.VR.Li').fireEvent('click', {button:1});
+        $('#AnnotationDrawer_controls a.dU.Wi').fireEvent('click', {button:1});
     };
 
     var cancelCpyAnnotations = function() {
@@ -114,8 +114,8 @@
         $('#AnnotationsDrawer_list > tbody:eq(1) > tr').each(function(idx, elem) {
             if ($(elem).find('input[type="checkbox"]').attr('checked') != undefined)
             {
-                $(this).find('.ew > a').fireEvent('click', {button:1});
-                $('#AnnotationsDrawer_list').find('.Xq:visible').fireEvent('click', {button:1});
+                $(this).find('.Ew > a').fireEvent('click', {button:1});
+                $('#AnnotationsDrawer_list a.mr:visible').fireEvent('click', {button:1});
             }
         });
         unsafeWindow.confirm = unsafeWindow.orig_confirm;
@@ -129,11 +129,11 @@
         var annotationsArray = localStorage.getItem('annotations');
         if (annotationsArray && (annotationsArray = JSON.parse(annotationsArray).length) > 0)
         {
-            $('#AnnotationDrawer_controls').find('a.Hi.LS').parent().append('<span id="AnnotationManagerWrapper">\
-                                                                            &nbsp;&nbsp; | &nbsp;&nbsp; <a id="AnnotationManager_paste" class="Hi" onclick="return false;" href="#">Paste ' +
+            $('#AnnotationDrawer_controls a.dU.Wi').parent().append('<span id="AnnotationManagerWrapper">\
+                                                                            &nbsp;&nbsp; | &nbsp;&nbsp; <a id="AnnotationManager_paste" class="dU" onclick="return false;" href="#">Paste ' +
                                                                             annotationsArray + ' annotation(s)</a>\
-                                                                            &nbsp;&nbsp; | &nbsp;&nbsp; <a id="AnnotationManager_show" class="Hi" onclick="return false;" href="#">Show annotation(s) in localstorage</a>\
-                                                                            &nbsp;&nbsp; | &nbsp;&nbsp; <a id="AnnotationManager_cancelcpy" class="Hi" onclick="return false;" href="#">Cancel copy</a>\
+                                                                            &nbsp;&nbsp; | &nbsp;&nbsp; <a id="AnnotationManager_show" class="dU" onclick="return false;" href="#">Show annotation(s) in localstorage</a>\
+                                                                            &nbsp;&nbsp; | &nbsp;&nbsp; <a id="AnnotationManager_cancelcpy" class="dU" onclick="return false;" href="#">Cancel copy</a>\
                                                                             </span>');
             $('#AnnotationManager_paste').click(pasteAnnotations);
             $('#AnnotationManager_show').click(showAnnotations);
@@ -141,14 +141,14 @@
             return true;
         }
 
-        $('#AnnotationDrawer_controls').find('a.Hi.LS').parent().append('<span id="AnnotationManagerWrapper">\
-                                                        | &nbsp;&nbsp;<a id="AnnotationManager_copy" class="Hi" onclick="return false;" href="#">Copy annotation(s)</a>\
-                                                        &nbsp;&nbsp; | &nbsp;&nbsp;<a id="AnnotationManager_remove" class="Hi" onclick="return false;" href="#">Remove annotation(s)</a>\
-                                                        &nbsp;&nbsp; | &nbsp;&nbsp;<a id="AnnotationManager_export" class="Hi" onclick="return false;" href="#">Export annotation(s) as CSV</a>\
+        $('#AnnotationDrawer_controls a.dU.Wi').parent().append('<span id="AnnotationManagerWrapper">\
+                                                        | &nbsp;&nbsp;<a id="AnnotationManager_copy" class="dU" onclick="return false;" href="#">Copy annotation(s)</a>\
+                                                        &nbsp;&nbsp; | &nbsp;&nbsp;<a id="AnnotationManager_remove" class="dU" onclick="return false;" href="#">Remove annotation(s)</a>\
+                                                        &nbsp;&nbsp; | &nbsp;&nbsp;<a id="AnnotationManager_export" class="dU" onclick="return false;" href="#">Export annotation(s) as CSV</a>\
                                                         &nbsp;&nbsp; |&nbsp;\
                                                             Select :\
-                                                            <a id="AnnotationManager_select_all" class="Hi" onclick="return false;" href="#">All</a>\
-                                                            &nbsp;&nbsp;| &nbsp;&nbsp;<a id="AnnotationManager_select_none" class="Hi" onclick="return false;" href="#">None</a>\
+                                                            <a id="AnnotationManager_select_all" onclick="return false;" href="#">All</a>\
+                                                            &nbsp;&nbsp;| &nbsp;&nbsp;<a id="AnnotationManager_select_none" onclick="return false;" href="#">None</a>\
                                                         </span>');
         $('#AnnotationsDrawer_list > tbody:eq(1) > tr').append('<td class="AnnotationManager_chckbx"><input type="checkbox" /></td>');
 

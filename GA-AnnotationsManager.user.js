@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           Google Analytics - Manage profiles annotations
-// @version        0.2.3
+// @version        0.2.4
 // @license        GPLv3 : http://www.gnu.org/licenses/gpl-3.0.txt
 // @author         Vincent Giersch <mail@vincent.sh>
 // @description    Manage annotations of Google Analytics profiles (multiple copy, delete and CSV export). Works only on Google Analytics V5.

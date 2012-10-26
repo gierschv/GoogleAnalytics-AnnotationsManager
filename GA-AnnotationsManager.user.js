@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           Google Analytics - Manage profiles annotations
-// @version        0.2.4
+// @version        0.2.5
 // @license        GPLv3 : http://www.gnu.org/licenses/gpl-3.0.txt
 // @author         Vincent Giersch <mail@vincent.sh>
 // @description    Manage annotations of Google Analytics profiles (multiple copy, delete and CSV export). Works only on Google Analytics V5.
@@ -51,6 +51,7 @@
             }
             str += ": " + annotationsArray[i].text + "\n";
         }
+        alert(str);
         return false;
     };
 
@@ -90,7 +91,7 @@
         annotationsArray = JSON.parse(annotationsArray);
         var pasteAnnotationsCurrent = 0;
         $(document).bind('DOMAttrModified', function(event) {
-            if (event.newValue === 'TY Cj disabled')
+            if (event.newValue.indexOf('disabled') >= 0)
             {
                 pasteAnnotationsFill(annotationsArray[pasteAnnotationsCurrent]);
                 pasteAnnotationsCurrent++;
@@ -138,10 +139,10 @@
         if (annotationsArray && (annotationsArray = JSON.parse(annotationsArray).length) > 0)
         {
             $('#AnnotationDrawer_controls td:eq(1)').append('<span id="AnnotationManagerWrapper">\
-                                                                            &nbsp;&nbsp; | &nbsp;&nbsp; <a id="AnnotationManager_paste" class="dU" onclick="return false;" href="#">Paste ' +
+                                                                            &nbsp;&nbsp; | &nbsp;&nbsp; <a id="AnnotationManager_paste" onclick="return false;" href="#">Paste ' +
                                                                             annotationsArray + ' annotation(s)</a>\
-                                                                            &nbsp;&nbsp; | &nbsp;&nbsp; <a id="AnnotationManager_show" class="dU" onclick="return false;" href="#">Show annotation(s) in localstorage</a>\
-                                                                            &nbsp;&nbsp; | &nbsp;&nbsp; <a id="AnnotationManager_cancelcpy" class="dU" onclick="return false;" href="#">Cancel copy</a>\
+                                                                            &nbsp;&nbsp; | &nbsp;&nbsp; <a id="AnnotationManager_show" onclick="return false;" href="#">Show annotation(s) in localstorage</a>\
+                                                                            &nbsp;&nbsp; | &nbsp;&nbsp; <a id="AnnotationManager_cancelcpy" onclick="return false;" href="#">Cancel copy</a>\
                                                                             </span>');
             $('#AnnotationManager_paste').click(pasteAnnotations);
             $('#AnnotationManager_show').click(showAnnotations);
@@ -150,9 +151,9 @@
         }
 
         $('#AnnotationDrawer_controls td:eq(1)').append('<span id="AnnotationManagerWrapper">\
-                                                        | &nbsp;&nbsp;<a id="AnnotationManager_copy" class="dU" onclick="return false;" href="#">Copy annotation(s)</a>\
-                                                        &nbsp;&nbsp; | &nbsp;&nbsp;<a id="AnnotationManager_remove" class="dU" onclick="return false;" href="#">Remove annotation(s)</a>\
-                                                        &nbsp;&nbsp; | &nbsp;&nbsp;<a id="AnnotationManager_export" class="dU" onclick="return false;" href="#">Export annotation(s) as CSV</a>\
+                                                        | &nbsp;&nbsp;<a id="AnnotationManager_copy" onclick="return false;" href="#">Copy annotation(s)</a>\
+                                                        &nbsp;&nbsp; | &nbsp;&nbsp;<a id="AnnotationManager_remove" onclick="return false;" href="#">Remove annotation(s)</a>\
+                                                        &nbsp;&nbsp; | &nbsp;&nbsp;<a id="AnnotationManager_export" onclick="return false;" href="#">Export annotation(s) as CSV</a>\
                                                         &nbsp;&nbsp; |&nbsp;\
                                                             Select :\
                                                             <a id="AnnotationManager_select_all" onclick="return false;" href="#">All</a>\
